@@ -5,5 +5,5 @@ const props = defineProps(buttonProps)
 </script>
 
 <template>
-  <button @click="onClick">---- Button{{ props?.title }}----</button>
+  <button @click="onClick">---- Button{{ props?.title }}---- <slot></slot></button>
 </template>

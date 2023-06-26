@@ -3,13 +3,21 @@ import WelcomeItem from './WelcomeItem.vue'
 
 import { Button } from '@/components/common/Button'
 import { Icon } from '@/components/common/Icon'
+
+const emit = defineEmits<{
+  (e: 'onClose', data: { firstName: string; lastName: string }): void
+}>()
+
+const handleSubmit = (event: HTMLButtonEvent) => {
+  emit('onClose', { firstName: 'hoang', lastName: 'phan' })
+}
 </script>
 
 <template>
   <WelcomeItem>
     <Icon name="github" size="18px" color="red" />
     <template #heading>Documentation</template>
-    <Button title="123" postIcon="123"> Button</Button>
+    <Button title="123" postIcon="123" @click="handleSubmit"> handle submit</Button>
     <Button.Icon title="icon button"> Icon Button</Button.Icon>
 
     Vue’s

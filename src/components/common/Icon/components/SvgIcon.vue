@@ -1,7 +1,3 @@
-<template>
-  <component :is="icon" class="svg-icon fill-current" />
-</template>
-
 <script lang="ts" setup>
 import { reactive } from 'vue'
 
@@ -26,6 +22,10 @@ const icon = getSvgNameFromPath(props.name)
 
 const fontSize = reactive({ default: props.size, small: '20px', large: '48px' })
 </script>
+
+<template>
+  <component :is="icon" class="svg-icon fill-current" />
+</template>
 
 <style scoped>
 .svg-icon {
