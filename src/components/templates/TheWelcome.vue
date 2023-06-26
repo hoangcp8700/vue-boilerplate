@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+
 import WelcomeItem from './WelcomeItem.vue'
 
 import { Button } from '@/components/common/Button'
 import { Icon } from '@/components/common/Icon'
+
+const firstNameWelcome = ref('')
+const lastNameWelcome = ref('')
+const props = defineProps({
+  firstName: String,
+  lastName: String
+})
 
 const emit = defineEmits<{
   (e: 'onClose', data: { firstName: string; lastName: string }): void
@@ -11,14 +20,32 @@ const emit = defineEmits<{
 const handleSubmit = (event: HTMLButtonEvent) => {
   emit('onClose', { firstName: 'hoang', lastName: 'phan' })
 }
+
+const fullNameRead = computed(() => `${props.firstName} ${props.lastName}`)
+const fullNameWelcome = computed({
+  get() {
+    return `${firstNameWelcome.value} ${lastNameWelcome.value}`
+  },
+  set(newValue) {
+    // Note: we are using destructuring assignment syntax here.
+    ;[firstNameWelcome.value, lastNameWelcome.value] = newValue.split(' ')
+  }
+})
+
+const handleSubmit2 = (event: HTMLButtonEvent) => {
+  fullNameWelcome.value = 'le tan'
+}
 </script>
 
 <template>
   <WelcomeItem>
     <Icon name="github" size="18px" color="red" />
     <template #heading>Documentation</template>
+    <p>FullNameRef: {{ fullNameRead }}</p>
+    <p>fullNameWelcome: {{ fullNameWelcome }}</p>
+
     <Button title="123" postIcon="123" @click="handleSubmit"> handle submit</Button>
-    <Button.Icon title="icon button"> Icon Button</Button.Icon>
+    <Button.Icon title="icon button" @click="handleSubmit2"> Icon Button</Button.Icon>
 
     Vue’s
     <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
