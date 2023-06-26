@@ -16,6 +16,7 @@ import logo from './shared/assets/icons/logo.svg'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
       </nav>
     </div>
   </header>
