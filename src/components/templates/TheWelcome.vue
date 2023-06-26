@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 import WelcomeItem from './WelcomeItem.vue'
 
 import { Button } from '@/components/common/Button'
 import { Icon } from '@/components/common/Icon'
 
-const firstNameWelcome = ref('')
+const firstNameWelcome = ref('123')
 const lastNameWelcome = ref('')
+const state = reactive({ count: 0 })
+
 const props = defineProps({
   firstName: String,
   lastName: String
@@ -35,6 +37,33 @@ const fullNameWelcome = computed({
 const handleSubmit2 = (event: HTMLButtonEvent) => {
   fullNameWelcome.value = 'le tan'
 }
+
+// watching ref
+const watchFullNameWelcomeRef = () => {
+  watch(fullNameWelcome, (newValue: string, oldValue: string) => {
+    console.log(`selected value changed from ${oldValue} to ${newValue}`)
+  })
+}
+
+// watching state
+const watchCountState = () => {
+  watch(
+    () => state.count,
+    (count, oldCount) => {
+      console.log(`selected value changed from ${oldCount} to ${count}`)
+    }
+  )
+}
+
+// watching state
+const watchBoth = () => {
+  watch([fullNameWelcome, () => state.count], ([fullnameNew, countNew]) => {
+    console.log(`fullnameNew is ${fullnameNew} and countNew is ${countNew}`)
+  })
+}
+watchFullNameWelcomeRef()
+watchCountState()
+watchBoth()
 </script>
 
 <template>
@@ -43,7 +72,8 @@ const handleSubmit2 = (event: HTMLButtonEvent) => {
     <template #heading>Documentation</template>
     <p>FullNameRef: {{ fullNameRead }}</p>
     <p>fullNameWelcome: {{ fullNameWelcome }}</p>
-
+    <h2>Count {{ state.count }}</h2>
+    <Button title="123" postIcon="123" @click="state.count++"> count</Button>
     <Button title="123" postIcon="123" @click="handleSubmit"> handle submit</Button>
     <Button.Icon title="icon button" @click="handleSubmit2"> Icon Button</Button.Icon>
 
